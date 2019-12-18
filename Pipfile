@@ -11,6 +11,7 @@ psycopg2 = "*"
 flask-login = "*"
 flask-mail = "*"
 pyjwt = "*"
+flask-bootstrap = "*"
 
 [dev-packages]
 
