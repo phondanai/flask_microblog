@@ -25,3 +25,5 @@ class Config(object):
     LANGUAGES = ['en', 'th']
 
     YANDEX_TRANSLATOR_KEY = os.environ.get('YANDEX_TRANSLATOR_KEY')
+
+    ELASTICSEARCH_URL = os.environ.get('ELASTICSEARCH_URL')
