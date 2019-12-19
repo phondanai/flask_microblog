@@ -1,5 +1,6 @@
 from datetime import datetime
-from flask import render_template, flash, redirect, url_for, request
+from flask import render_template, flash, redirect, url_for, request, g
+from flask_babel import get_locale
 from flask_login import current_user, login_user, logout_user, login_required
 from werkzeug.urls import url_parse
 from app import app
@@ -104,6 +105,8 @@ def before_request():
         current_user.last_seen = datetime.utcnow()
         db.session.commit()
 
+    g.locale = str(get_locale())
+
 
 @app.route("/edit_profile", methods=["GET", "POST"])
 @login_required
@@ -197,3 +200,4 @@ def reset_password(token):
         flash('Your password has been reset.')
         return redirect(url_for('login'))
     return render_template('reset_password.html', form=form)
+
