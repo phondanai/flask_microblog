@@ -2,6 +2,8 @@ import logging
 from logging.handlers import SMTPHandler, RotatingFileHandler
 import os
 from elasticsearch import Elasticsearch
+from redis import Redis
+import rq
 from flask import Flask, request, current_app
 from flask_sqlalchemy import SQLAlchemy
 from flask_migrate import Migrate
@@ -26,6 +28,8 @@ babel = Babel()
 def create_app(config_class=Config):
     app = Flask(__name__)
     app.config.from_object(config_class)
+    app.redis = Redis.from_url(app.config['REDIS_URL'])
+    app.task_queue = rq.Queue('microblog-tasks', connection=app.redis)
 
     db.init_app(app)
     migrate.init_app(app, db)
